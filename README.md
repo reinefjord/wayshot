@@ -1,7 +1,8 @@
 # wayshot
 
-Screenshot utility that combines the powers of
+A screenshot utility that combines the powers of
 [grim](https://github.com/emersion/grim) and [slurp](https://github.com/emersion/slurp).
+
 
 ## Usage
 
@@ -11,11 +12,13 @@ Usage: wayshot [options...] [filename]
 
 Options:
   -s      Select a region to capture
-  -w      Select a window (only in Sway)
+  -w      Select a window (only in sway)
   -d <n>  Delay by n seconds
-  -c      Include cursors in the screenshot
+  -c      Save screenshot to clipboard
+  -x      Include cursors in the screenshot
   -h      Show this help message
 ```
+
 
 ## Dependencies
 
@@ -27,3 +30,4 @@ Required:
 Optional:
 
   * [jq](https://github.com/stedolan/jq) - window selection in [sway](https://github.com/swaywm/sway)
+  * [wl-clipboard](https://github.com/bugaevc/wl-clipboard) - save to clipboard

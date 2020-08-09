@@ -5,9 +5,10 @@ Usage: $(basename "$0") [options...] [filename]
 
 Options:
   -s      Select a region to capture
-  -w      Select a window (only in Sway)
+  -w      Select a window (only in sway)
   -d <n>  Delay by n seconds
-  -c      Include cursors in the screenshot
+  -c      Save screenshot to clipboard
+  -x      Include cursors in the screenshot
   -h      Show this help message
 "
 
@@ -29,7 +30,7 @@ while (( $# > 0 )); do
     -d)
       shift
       if ! [ "$1" -ge "$1" ] 2>/dev/null; then
-        echo "Not an integer: $1."
+        echo "Not an integer: $1"
         echo_usage
         exit 1
       fi
@@ -37,6 +38,10 @@ while (( $# > 0 )); do
       shift
       ;;
     -c)
+      CLIPBOARD=yes
+      shift
+      ;;
+    -x)
       CURSOR=yes
       shift
       ;;
@@ -45,7 +50,7 @@ while (( $# > 0 )); do
       exit 0
       ;;
     -*)
-      echo "Unknown argument: $1."
+      echo "Unknown argument: $1"
       echo_usage
       exit 1
       ;;
@@ -75,7 +80,7 @@ fi
 
 if [ -n "$SWAY_WINDOW" ]; then
   if ! hash jq 2>/dev/null; then
-    echo "jq was not found, please install it to use this function"
+    echo "jq was not found, please install it to use this function."
     exit 1
   fi
   SELECTION=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
@@ -95,7 +100,13 @@ if [ -n "$DELAY" ]; then
   echo ""
 fi
 
-if [ -n "$FILENAME" ]; then
+if [ -n "$CLIPBOARD" ]; then
+  if ! hash wl-copy 2>/dev/null; then
+    echo "wl-copy was not found, please install it to use this function."
+    exit 1
+  fi
+  grim "${OPTS[@]}" - | wl-copy
+elif [ -n "$FILENAME" ]; then
   grim "${OPTS[@]}" "$FILENAME"
 else
   grim "${OPTS[@]}"
