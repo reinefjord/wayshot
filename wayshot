@@ -24,6 +24,10 @@ while (( $# > 0 )); do
       shift
       ;;
     -w)
+      if ! hash jq 2>/dev/null; then
+        echo "jq was not found, please install jq to use this function."
+        exit 1
+      fi
       SWAY_WINDOW=yes
       shift
       ;;
@@ -38,6 +42,10 @@ while (( $# > 0 )); do
       shift
       ;;
     -c)
+      if ! hash wl-copy 2>/dev/null; then
+        echo "wl-copy was not found, please install wl-clipboard to use this function."
+        exit 1
+      fi
       CLIPBOARD=yes
       shift
       ;;
@@ -79,10 +87,6 @@ if [ -n "$REGION" ]; then
 fi
 
 if [ -n "$SWAY_WINDOW" ]; then
-  if ! hash jq 2>/dev/null; then
-    echo "jq was not found, please install it to use this function."
-    exit 1
-  fi
   SELECTION=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
   OPTS+=("-g $SELECTION")
 fi
@@ -101,10 +105,6 @@ if [ -n "$DELAY" ]; then
 fi
 
 if [ -n "$CLIPBOARD" ]; then
-  if ! hash wl-copy 2>/dev/null; then
-    echo "wl-copy was not found, please install it to use this function."
-    exit 1
-  fi
   grim "${OPTS[@]}" - | wl-copy
 elif [ -n "$FILENAME" ]; then
   grim "${OPTS[@]}" "$FILENAME"
