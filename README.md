@@ -26,4 +26,4 @@ Required:
 
 Optional:
 
-  * [jq](https://stedolan.github.io/jq/) - window selection in [Sway](https://swaywm.org/)
+  * [jq](https://github.com/stedolan/jq) - window selection in [sway](https://github.com/swaywm/sway)
