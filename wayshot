@@ -1,13 +1,21 @@
 #!/bin/bash
 
+if hash jq 2>/dev/null; then
+  JQ_AVAILABLE=1
+fi
+
+if hash wl-copy 2>/dev/null; then
+  WLCOPY_AVAILABLE=1
+fi
+
 USAGE="\
 Usage: $(basename "$0") [options...] [filename]
 
 Options:
   -s      Select a region to capture
-  -w      Select a window (only in sway)
+  -w      Select a window (only in sway) $([ -z "$JQ_AVAILABLE" ] && echo "(not available)")
   -d <n>  Delay by n seconds
-  -c      Save screenshot to clipboard
+  -c      Save screenshot to clipboard $([ -z "$WLCOPY_AVAILABLE" ] && echo "(not available)")
   -x      Include cursors in the screenshot
   -h      Show this help message
 "
@@ -24,7 +32,7 @@ while (( $# > 0 )); do
       shift
       ;;
     -w)
-      if ! hash jq 2>/dev/null; then
+      if [ -z "$JQ_AVAILABLE" ]; then
         echo "jq was not found, please install jq to use this function."
         exit 1
       fi
@@ -42,7 +50,7 @@ while (( $# > 0 )); do
       shift
       ;;
     -c)
-      if ! hash wl-copy 2>/dev/null; then
+      if [ -z "$WLCOPY_AVAILABLE" ]; then
         echo "wl-copy was not found, please install wl-clipboard to use this function."
         exit 1
       fi
