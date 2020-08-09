@@ -1,0 +1,78 @@
+#!/bin/bash
+
+USAGE="\
+Usage: $(basename $0) [options...] [filename]
+
+Options:
+  -s      Select a region to capture
+  -d <n>  Delay by n seconds
+  -c      Include cursors in the screenshot
+  -h      Show this help message
+"
+
+function echo_usage {
+  echo ""
+  echo "$USAGE"
+}
+
+while (( $# > 0 )); do
+  case $1 in
+    -s)
+      REGION=yes
+      shift
+      ;;
+    -d)
+      shift
+      if ! [ "$1" -ge "$1" ] 2>/dev/null; then
+        echo "Not an integer: $1"
+        echo_usage
+        exit 1
+      fi
+      DELAY=$1
+      shift
+      ;;
+    -c)
+      CURSOR=yes
+      shift
+      ;;
+    -h)
+      echo "$USAGE"
+      exit 0
+      ;;
+    -*)
+      echo "Unknown argument: $1"
+      echo_usage
+      exit 1
+      ;;
+    *)
+      if [ -z "$FILENAME" ]; then
+        FILENAME="$1"
+        shift
+      else
+        echo "Too many arguments."
+        echo_usage
+        exit 1
+      fi
+      ;;
+  esac
+done
+
+OPTS=()
+if [ -n "$REGION" ]; then
+  OPTS+=("-g $(slurp)")
+fi
+
+if [ -n "$CURSOR" ]; then
+  OPTS+=("-c")
+fi
+
+if [ -n "$DELAY" ]; then
+  for COUNT in $(seq $DELAY -1 1); do
+    echo -n "$COUNT "
+    sleep 1
+  done
+  echo "Smile! :)"
+  echo ""
+fi
+
+grim "${OPTS[@]}" $FILENAME
