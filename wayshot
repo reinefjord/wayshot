@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USAGE="\
-Usage: $(basename $0) [options...] [filename]
+Usage: $(basename "$0") [options...] [filename]
 
 Options:
   -s      Select a region to capture
@@ -67,7 +67,7 @@ if [ -n "$CURSOR" ]; then
 fi
 
 if [ -n "$DELAY" ]; then
-  for COUNT in $(seq $DELAY -1 1); do
+  for COUNT in $(seq "$DELAY" -1 1); do
     echo -n "$COUNT "
     sleep 1
   done
@@ -75,4 +75,8 @@ if [ -n "$DELAY" ]; then
   echo ""
 fi
 
-grim "${OPTS[@]}" $FILENAME
+if [ -n "$FILENAME" ]; then
+  grim "${OPTS[@]}" "$FILENAME"
+else
+  grim "${OPTS[@]}"
+fi
