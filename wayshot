@@ -5,6 +5,7 @@ Usage: $(basename "$0") [options...] [filename]
 
 Options:
   -s      Select a region to capture
+  -w      Select a window (only in Sway)
   -d <n>  Delay by n seconds
   -c      Include cursors in the screenshot
   -h      Show this help message
@@ -19,6 +20,10 @@ while (( $# > 0 )); do
   case $1 in
     -s)
       REGION=yes
+      shift
+      ;;
+    -w)
+      SWAY_WINDOW=yes
       shift
       ;;
     -d)
@@ -57,9 +62,24 @@ while (( $# > 0 )); do
   esac
 done
 
+if [ -n "$REGION" ] && [ -n "$SWAY_WINDOW" ]; then
+  echo "You may only use one of -s and -w."
+  echo_usage
+  exit 1
+fi
+
 OPTS=()
 if [ -n "$REGION" ]; then
   OPTS+=("-g $(slurp)")
+fi
+
+if [ -n "$SWAY_WINDOW" ]; then
+  if ! hash jq 2>/dev/null; then
+    echo "jq was not found, please install it to use this function"
+    exit 1
+  fi
+  SELECTION=$(swaymsg -t get_tree | jq -r '.. | select(.visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
+  OPTS+=("-g $SELECTION")
 fi
 
 if [ -n "$CURSOR" ]; then

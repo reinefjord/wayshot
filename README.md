@@ -11,6 +11,7 @@ Usage: wayshot [options...] [filename]
 
 Options:
   -s      Select a region to capture
+  -w      Select a window (only in Sway)
   -d <n>  Delay by n seconds
   -c      Include cursors in the screenshot
   -h      Show this help message
