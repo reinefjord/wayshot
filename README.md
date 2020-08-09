@@ -16,3 +16,14 @@ Options:
   -c      Include cursors in the screenshot
   -h      Show this help message
 ```
+
+## Dependencies
+
+Required:
+
+  * [grim](https://github.com/emersion/grim)
+  * [slurp](https://github.com/emersion/slurp)
+
+Optional:
+
+  * [jq](https://stedolan.github.io/jq/) - window selection in [Sway](https://swaywm.org/)
