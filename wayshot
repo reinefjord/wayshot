@@ -78,7 +78,7 @@ if [ -n "$SWAY_WINDOW" ]; then
     echo "jq was not found, please install it to use this function"
     exit 1
   fi
-  SELECTION=$(swaymsg -t get_tree | jq -r '.. | select(.visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
+  SELECTION=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)
   OPTS+=("-g $SELECTION")
 fi
 
