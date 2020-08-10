@@ -11,6 +11,8 @@ fi
 USAGE="\
 Usage: $(basename "$0") [options...] [filename]
 
+Use - as filename to write the screenshot to stdout.
+
 Options:
   -s      Select a region to capture
   -w      Select a window (only in sway) $([ -z "$JQ_AVAILABLE" ] && echo "(not available)")
@@ -65,7 +67,7 @@ while (( $# > 0 )); do
       echo "$USAGE"
       exit 0
       ;;
-    -*)
+    -?)
       echo "Unknown argument: $1"
       echo_usage
       exit 1

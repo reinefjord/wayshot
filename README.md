@@ -10,6 +10,8 @@ A screenshot utility that combines the powers of
 $ wayshot -h
 Usage: wayshot [options...] [filename]
 
+Use - as filename to write the screenshot to stdout.
+
 Options:
   -s      Select a region to capture
   -w      Select a window (only in sway)
