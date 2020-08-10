@@ -43,9 +43,16 @@ while (( $# > 0 )); do
       ;;
     -d)
       shift
-      if ! [ "$1" -ge "$1" ] 2>/dev/null; then
+      if [ -z "$1" ]; then
+        echo "-d requires a postive integer."
+        echo_usage
+        exit 1
+      elif ! [ "$1" -ge "$1" ] 2>/dev/null; then
         echo "Not an integer: $1"
         echo_usage
+        exit 1
+      elif [ "$1" -lt "1" ]; then
+        echo "Delay has to be a positive integer."
         exit 1
       fi
       DELAY=$1
