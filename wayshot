@@ -1,5 +1,7 @@
 #!/bin/bash
 
+shopt -s extglob
+
 if hash jq 2>/dev/null; then
   JQ_AVAILABLE=1
 fi
@@ -74,7 +76,7 @@ while (( $# > 0 )); do
       echo "$USAGE"
       exit 0
       ;;
-    -?)
+    -+(?))
       echo "Unknown argument: $1"
       echo_usage
       exit 1
