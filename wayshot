@@ -13,6 +13,9 @@ fi
 USAGE="\
 Usage: $(basename "$0") [options...] [filename]
 
+Screenshots are written to specified filename or to a
+timestamped file if not specified. See grim(1) for more info.
+
 Use - as filename to write the screenshot to stdout.
 
 Options:
