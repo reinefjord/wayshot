@@ -10,6 +10,9 @@ A screenshot utility that combines the powers of
 $ wayshot -h
 Usage: wayshot [options...] [filename]
 
+Screenshots are written to specified filename or to a
+timestamped file if not specified. See grim(1) for more info.
+
 Use - as filename to write the screenshot to stdout.
 
 Options:

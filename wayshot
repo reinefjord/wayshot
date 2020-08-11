@@ -20,9 +20,9 @@ Use - as filename to write the screenshot to stdout.
 
 Options:
   -s      Select a region to capture
-  -w      Select a window (only in sway) $([ -z "$JQ_AVAILABLE" ] && echo "(not available)")
+  -w      Select a window (only in sway)$([ -z "$JQ_AVAILABLE" ] && echo " (not available)")
   -d <n>  Delay by n seconds
-  -c      Save screenshot to clipboard $([ -z "$WLCOPY_AVAILABLE" ] && echo "(not available)")
+  -c      Save screenshot to clipboard$([ -z "$WLCOPY_AVAILABLE" ] && echo " (not available)")
   -x      Include cursors in the screenshot
   -h      Show this help message
 "
