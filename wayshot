@@ -19,12 +19,13 @@ timestamped file if not specified. See grim(1) for more info.
 Use - as filename to write the screenshot to stdout.
 
 Options:
-  -s      Select a region to capture
-  -w      Select a window (only in sway)$([ -z "$JQ_AVAILABLE" ] && echo " (not available)")
-  -d <n>  Delay by n seconds
-  -c      Save screenshot to clipboard$([ -z "$WLCOPY_AVAILABLE" ] && echo " (not available)")
-  -x      Include cursors in the screenshot
-  -h      Show this help message
+  -s      Select a region to capture.
+  -w      Select a window (only in sway).$([ -z "$JQ_AVAILABLE" ] && echo " (not available)")
+  -d <n>  Delay by n seconds.
+  -c      Save screenshot to clipboard.$([ -z "$WLCOPY_AVAILABLE" ] && echo " (not available)")
+          Will save to file too if a filename is specified.
+  -x      Include cursors in the screenshot.
+  -h      Show this help message.
 "
 
 function echo_usage {
@@ -127,7 +128,11 @@ if [ -n "$DELAY" ]; then
 fi
 
 if [ -n "$CLIPBOARD" ]; then
-  grim "${OPTS[@]}" - | wl-copy
+  if [ -n "$FILENAME" ]; then
+    grim "${OPTS[@]}" - | tee "$FILENAME" | wl-copy
+  else
+    grim "${OPTS[@]}" - | wl-copy
+  fi
 elif [ -n "$FILENAME" ]; then
   grim "${OPTS[@]}" "$FILENAME"
 else
