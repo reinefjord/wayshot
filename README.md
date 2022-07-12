@@ -16,12 +16,13 @@ timestamped file if not specified. See grim(1) for more info.
 Use - as filename to write the screenshot to stdout.
 
 Options:
-  -s      Select a region to capture
-  -w      Select a window (only in sway)
-  -d <n>  Delay by n seconds
-  -c      Save screenshot to clipboard
-  -x      Include cursors in the screenshot
-  -h      Show this help message
+  -s      Select a region to capture.
+  -w      Select a window (only in sway).
+  -d <n>  Delay by n seconds.
+  -c      Save screenshot to clipboard.
+          Will save to file too if a filename is specified.
+  -x      Include cursors in the screenshot.
+  -h      Show this help message.
 ```
 
 
